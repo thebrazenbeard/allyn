@@ -1,6 +1,7 @@
 # ALLYN teaching experiment — protocol v1 (pre-registration candidate)
 
-Status: **design only; no experiment has been run or qualified by this document**.
+Status: **proposed preregistration; no confirmatory experiment has been run
+or qualified under these criteria**.
 Prepared 2026-11-04 from ALLYN feature-branch base
 `96afcf8217c90870caf9474bd628d8490c7762b3` and subsequent local research
 module additions, pending a reviewed GitHub commit. This file is a proposed
@@ -89,9 +90,16 @@ before consuming its HELDOUT iterable, retains a no-lesson control, and
 rejects exact duplicate DEV/HELDOUT examples. The `AdmissionLedger` adds
 local request-ID idempotency. **These are structural, in-process guards.**
 They cannot detect semantic near-duplicates, stop a caller from reading or
-repeatedly querying HELDOUT beforehand, authenticate provenance, or implement
-four-arm confirmatory custody. A genuinely independent evaluator and stronger
-dataset/admission contracts are still required before H1 can be tested credibly.
+repeatedly querying HELDOUT beforehand, or authenticate provenance. A new
+`evaluate_four_arm` implementation exercises the four aggregate score arms
+and declared source-group summaries, with a deterministic invented-data demo.
+That demo is **not** the preregistered H1/H2 run: its tiny sample, synthetic
+declared groups, absent independent custodian, and missing per-example access
+audit fail the confirmatory gates. The caller's `genuine`, `irrelevant`, and
+`misleading` arm names are not independently checked for truth or deception.
+A genuinely independent evaluator and
+stronger dataset/admission contracts are still required before H1 can be
+tested credibly.
 
 ## Frozen experiment register
 
@@ -135,8 +143,9 @@ pre-registration and independently frozen HELDOUT partition.
 | S03 | `src/allyn/ledger.py` SHA-256 `d21349b454f7d21de0ad16020200bd0ec439ce5b1cc36a908670cee6b84a2a04` | Prediction precedes model observation in a local call; no durable transaction or arbitrary model rollback. |
 | S04 | `pyproject.toml` SHA-256 `aecaa3d15b92cda0249af12343471ba7850a1ce9d5a6d936dc2ec39bad88ca5a` | Python >=3.11, standard library runtime dependencies; wheel packaging requires setuptools build tool. |
 
-No empirical results, external bibliography, or independent confirmation have
-been entered. Any future experiment must **append** dated outcomes with run
+No confirmatory results, external bibliography, or independent confirmation
+have been entered. The synthetic four-arm CLI is an engineering smoke test,
+not H1/H2 evidence. Any future experiment must **append** dated outcomes with run
 commands, exit codes, exact source versions, deviations, and independent
 verdict (`confirmed`, `partially-confirmed`, `rejected`, or `inconclusive`);
 do not edit these proposed preregistration criteria after observing results.

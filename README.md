@@ -35,6 +35,7 @@ Requires Python 3.11 or newer. From the repository root:
 ```bash
 PYTHONPATH=src python -m allyn demo
 PYTHONPATH=src python -m allyn cycle-demo
+PYTHONPATH=src python examples/synthetic_four_arm_demo.py
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
@@ -44,6 +45,7 @@ Windows PowerShell:
 $env:PYTHONPATH = 'src'
 python -m allyn demo
 python -m allyn cycle-demo
+python examples/synthetic_four_arm_demo.py
 python -m unittest discover -s tests -v
 ```
 
@@ -70,10 +72,23 @@ Current components:
 - `allyn.evaluation`: source/record-labeled, bounded frozen specimens with
   structural split-leakage checks and reproducible hashes. This is not a
   sealed independent evaluator.
+- `allyn.experiment`: a reproducible four-arm next-token comparison (baseline,
+  selected lesson, token-count-matched irrelevant lesson, misleading lesson),
+  with per-declared-source-group scores and explicit scale/qualification limits.
+  The `genuine`/`irrelevant`/`misleading` labels are caller declarations, not
+  independently verified truth or falsehood.
+- `allyn.provenance`: bounded caller-declared source family, split, and license
+  references. A declared license ID and SHA-256 manifest do **not** authorize
+  copying or training on any real corpus.
+- `allyn.questions`: bounded Socratic prompt outlines centered on assumptions,
+  counterexamples, falsifiers, and evidence gaps; it does not contact a student,
+  execute tools, or establish truth.
 - `allyn demo`: a reproducible toy observation-and-teaching demonstration with
   machine-readable JSON and an explicit evidence ceiling.
 - `allyn cycle-demo`: a reproducible candidate-selection-and-test example with
   a misleading candidate and explicit caller-controlled evidence ceiling.
+- `examples/synthetic_four_arm_demo.py`: four-arm execution using invented
+  sequences only, with both favorable and harmful toy outcomes preserved.
 
 The demonstration only measures **next-token pattern transfer**. Similar local
 contexts between lessons and tests are expected; this is not a claim of novel
@@ -89,10 +104,11 @@ Bash and `powershell -File scripts/check.ps1` on Windows PowerShell. They run
 without a hosted service or paid dependencies.
 
 The [experimental preregistration candidate](docs/EXPERIMENT_PROTOCOL_V1.md)
-specifies additional, **not yet executed** requirements: independent heldout
-custody, source-family deduplication, irrelevant/misleading negative controls,
-source-group results, and an actual teacher/student comparison. None of the
-small toy demos meets those confirmatory requirements.
+specifies additional, **not yet qualified** requirements: independent heldout
+custody, reviewed corpus rights and source families, controls and source-group
+results on a precommitted study, and an actual protected teacher/student
+comparison. The synthetic four-arm example exercises the controls but does
+not meet the confirmatory sample-size, provenance, or custody gates.
 
 See [portfolio reuse boundaries](docs/PORTFOLIO_REUSE.md) for the existing
 systems considered and the reasons we have not merged their runtimes or
