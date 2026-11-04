@@ -40,6 +40,14 @@ try {
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     & $commandName @prefix -m allyn cycle-demo
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    & $commandName @prefix (Join-Path $repoRoot 'examples/synthetic_four_arm_demo.py')
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    & $commandName @prefix (Join-Path $repoRoot 'examples/synthetic_four_arm_audit_demo.py')
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    & $commandName @prefix (Join-Path $repoRoot 'examples/synthetic_student_exchange_demo.py')
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    & $commandName @prefix (Join-Path $repoRoot 'examples/synthetic_split_audit_demo.py') --clean
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 }
 finally {
     $env:PYTHONPATH = $previousPythonPath

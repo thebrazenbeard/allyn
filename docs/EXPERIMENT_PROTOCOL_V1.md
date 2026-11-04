@@ -149,3 +149,40 @@ not H1/H2 evidence. Any future experiment must **append** dated outcomes with ru
 commands, exit codes, exact source versions, deviations, and independent
 verdict (`confirmed`, `partially-confirmed`, `rejected`, or `inconclusive`);
 do not edit these proposed preregistration criteria after observing results.
+
+## Engineering addendum — 2026-11-04 (no change to H1/H2/H3)
+
+The source branch now contains additional **unqualified** controls:
+
+- `split_controls.audit_partition_overlap` detects some normalized duplicate
+  and lexical near-duplicate collisions but is not semantic decontamination.
+- `student_exchange.run_student_exchange` freezes its teacher proposal before
+  evaluating HELDOUT in the local callback order. Callback owners can still
+  share private state, and model state / weight digests are caller-declared.
+- `custodian.evaluate_once` and `four_arm_custodian.evaluate_four_arm_once`
+  store advisory, local one-use claims by heldout token content. The latter
+  evaluates all four already-declared arms in a single request. Neither
+  establishes independent source custody, unalterable heldout data, or a
+  protected evaluator identity. Separate baseline/post exchange callbacks do
+  not yet integrate into the one-use custodian contract.
+- `experiment_report.audit_four_arm` preserves descriptive per-example
+  outcomes and paired differences for an authorized reviewer, while explicitly
+  denying H1/H2 qualification. It also reports an unmatched misleading-lesson
+  token budget, which can bias H2 comparisons.
+
+The internal hostile review reproduced and regression-tested: identical
+heldout reuse after changing lessons, a preselection callback leak, a
+context-only update that dropped a known weight digest, and an unkeyed public
+specimen-digest dictionary oracle. Their identified paths were corrected in
+this source wave. **Residual disclosures remain**: aggregate/per-group scores
+can reveal small hidden answer sets, advisory state files are same-user
+accessible, and a caller can provide or adapt its own HELDOUT records.
+Evaluator-facing scores must not be fed to the teacher while the private test
+set is still useful. The two reproducible negative examples are recorded in
+`docs/FALSIFICATION_CASES.md`.
+
+No actual H1/H2/H3 confirmatory trial has been run. Sample size 100 and three
+declared source groups are **not** an established power calculation or proof
+of group independence; further evaluator custody, rights and source-family
+admission, registered uncertainty analysis, and real model-update evidence
+are necessary before changing the verdict from **UNKNOWN**.
