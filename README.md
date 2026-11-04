@@ -36,6 +36,9 @@ Requires Python 3.11 or newer. From the repository root:
 PYTHONPATH=src python -m allyn demo
 PYTHONPATH=src python -m allyn cycle-demo
 PYTHONPATH=src python examples/synthetic_four_arm_demo.py
+PYTHONPATH=src python examples/synthetic_four_arm_audit_demo.py
+PYTHONPATH=src python examples/synthetic_student_exchange_demo.py
+PYTHONPATH=src python examples/synthetic_split_audit_demo.py --clean
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
@@ -46,6 +49,9 @@ $env:PYTHONPATH = 'src'
 python -m allyn demo
 python -m allyn cycle-demo
 python examples/synthetic_four_arm_demo.py
+python examples/synthetic_four_arm_audit_demo.py
+python examples/synthetic_student_exchange_demo.py
+python examples/synthetic_split_audit_demo.py --clean
 python -m unittest discover -s tests -v
 ```
 
@@ -83,12 +89,36 @@ Current components:
 - `allyn.questions`: bounded Socratic prompt outlines centered on assumptions,
   counterexamples, falsifiers, and evidence gaps; it does not contact a student,
   execute tools, or establish truth.
+- `allyn.split_controls`: a configurable lexical cross-partition overlap
+  auditor. Its duplicate and near-duplicate findings are advisory; paraphrases,
+  fabricated source families and prior exposure may evade it.
+- `allyn.student_exchange`: an offline callback-driven interface for a
+  separate student's declared state, a teacher proposal, and matched before/
+  after assessments. It checks event order and receipt consistency, **not**
+  actual optimizer steps, neural weights, identity, or grader independence.
+- `allyn.custodian`: a local one-shot evaluation entrypoint that returns only
+  aggregate scores and keeps an advisory filesystem replay register for the
+  held-out content. It is **not** a tamper-proof or independent evaluator:
+  the same OS user or a new state directory can bypass its intended boundary.
+  Even aggregate counts can disclose hidden answers for tiny datasets, so
+  evaluator score receipts must not be used as teacher-facing feedback before
+  the precommitted experiment is closed.
+- `allyn.experiment_report`: per-example four-arm correctness and paired
+  descriptive diagnostics for an authorized researcher/evaluator. Do **not**
+  expose its per-example data to a teacher using hidden HELDOUT examples.
 - `allyn demo`: a reproducible toy observation-and-teaching demonstration with
   machine-readable JSON and an explicit evidence ceiling.
 - `allyn cycle-demo`: a reproducible candidate-selection-and-test example with
   a misleading candidate and explicit caller-controlled evidence ceiling.
 - `examples/synthetic_four_arm_demo.py`: four-arm execution using invented
   sequences only, with both favorable and harmful toy outcomes preserved.
+- `examples/synthetic_four_arm_audit_demo.py`: reviewer-facing per-example and
+  paired diagnostic output against synthetic, deliberately public targets.
+- `examples/synthetic_student_exchange_demo.py`: three independent local
+  n-gram student callback exchanges; context updates only, no model weights.
+- `examples/synthetic_split_audit_demo.py`: invented duplicate/near-duplicate
+  leakage fixture (default exits 2 to indicate contamination); `--clean`
+  demonstrates an uncontaminated control that exits 0.
 
 The demonstration only measures **next-token pattern transfer**. Similar local
 contexts between lessons and tests are expected; this is not a claim of novel
@@ -96,8 +126,9 @@ grammar induction, semantic understanding, independently authenticated data,
 or a neural student's permanent learning. Inquiry records are likewise
 in-memory, and source identities are caller-supplied; neither module has
 authenticated provenance, cross-process persistence, or independent evaluation.
-A frozen, independently custodied evaluation and a true teacher/student
-protocol are later research gates.
+A frozen, **independently custodied** evaluation and a real, independently
+verified student/model update remain research gates. A local callback exchange
+or one-shot process guard is not a substitute for either.
 
 Local repeatable verification scripts are `bash scripts/check.sh` on Linux/Git
 Bash and `powershell -File scripts/check.ps1` on Windows PowerShell. They run
@@ -113,3 +144,9 @@ not meet the confirmatory sample-size, provenance, or custody gates.
 See [portfolio reuse boundaries](docs/PORTFOLIO_REUSE.md) for the existing
 systems considered and the reasons we have not merged their runtimes or
 identities into ALLYN.
+
+The [falsification cases](docs/FALSIFICATION_CASES.md) preserve counterexamples:
+invented source groups can produce perfect toy outcomes, and a caller-owned
+heldout iterator can adapt to a completed lesson selection. High synthetic
+accuracy or a SHA-256 digest does not establish learning, source independence,
+or authenticated evaluation.
