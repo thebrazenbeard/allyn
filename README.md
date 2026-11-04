@@ -34,6 +34,7 @@ Requires Python 3.11 or newer. From the repository root:
 
 ```bash
 PYTHONPATH=src python -m allyn demo
+PYTHONPATH=src python -m allyn cycle-demo
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
@@ -42,6 +43,7 @@ Windows PowerShell:
 ```powershell
 $env:PYTHONPATH = 'src'
 python -m allyn demo
+python -m allyn cycle-demo
 python -m unittest discover -s tests -v
 ```
 
@@ -57,8 +59,21 @@ Current components:
 - `allyn.inquiry`: source-attributed reports and challenges, explicit corrections,
   contested propositions, and deterministic evidence-gap questions. Teacher
   claims remain unverified reports, not established truths.
+- `allyn.admission`: bounded, in-memory request idempotency, rejecting changed
+  payloads under the same request ID. Source strings and payload hashes do not
+  authenticate a reporter or provide durability across restarts.
+- `allyn.curriculum`: deterministic, train-only scheduling of unresolved inquiry
+  questions. Self-reported scores cannot prove mastery or establish truth.
+- `allyn.protocol`: a small candidate-lesson cycle. It selects using declared
+  development probes, *then* reads a separate declared heldout set and retains
+  negative gains, with no-lesson control and exact overlap checks.
+- `allyn.evaluation`: source/record-labeled, bounded frozen specimens with
+  structural split-leakage checks and reproducible hashes. This is not a
+  sealed independent evaluator.
 - `allyn demo`: a reproducible toy observation-and-teaching demonstration with
   machine-readable JSON and an explicit evidence ceiling.
+- `allyn cycle-demo`: a reproducible candidate-selection-and-test example with
+  a misleading candidate and explicit caller-controlled evidence ceiling.
 
 The demonstration only measures **next-token pattern transfer**. Similar local
 contexts between lessons and tests are expected; this is not a claim of novel
@@ -68,6 +83,16 @@ in-memory, and source identities are caller-supplied; neither module has
 authenticated provenance, cross-process persistence, or independent evaluation.
 A frozen, independently custodied evaluation and a true teacher/student
 protocol are later research gates.
+
+Local repeatable verification scripts are `bash scripts/check.sh` on Linux/Git
+Bash and `powershell -File scripts/check.ps1` on Windows PowerShell. They run
+without a hosted service or paid dependencies.
+
+The [experimental preregistration candidate](docs/EXPERIMENT_PROTOCOL_V1.md)
+specifies additional, **not yet executed** requirements: independent heldout
+custody, source-family deduplication, irrelevant/misleading negative controls,
+source-group results, and an actual teacher/student comparison. None of the
+small toy demos meets those confirmatory requirements.
 
 See [portfolio reuse boundaries](docs/PORTFOLIO_REUSE.md) for the existing
 systems considered and the reasons we have not merged their runtimes or

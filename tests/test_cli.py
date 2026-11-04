@@ -36,6 +36,29 @@ class TestOfflineDemo(unittest.TestCase):
         self.assertIn("baseline_accuracy", record["transfer"])
         self.assertIn("taught_accuracy", record["transfer"])
 
+    def test_cycle_demo_is_machine_readable_and_explicitly_unverified(self) -> None:
+        environment = os.environ.copy()
+        environment["PYTHONPATH"] = str(ROOT / "src")
+        result = subprocess.run(
+            [sys.executable, "-m", "allyn", "cycle-demo"],
+            cwd=ROOT,
+            env=environment,
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["schema"], "allyn.toy-teaching-cycle.v0")
+        self.assertEqual(
+            report["evidence_class"],
+            "CALLER_SUPPLIED_PATTERN_TRANSFER_NOT_INDEPENDENT_EVALUATION",
+        )
+        self.assertEqual(report["cycle"]["selected_candidate_id"], "chirp")
+        self.assertEqual(report["cycle"]["provenance_status"], "CALLER_DECLARED_UNVERIFIED")
+        self.assertEqual(report["cycle"]["final_transfer"]["evaluated_count"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

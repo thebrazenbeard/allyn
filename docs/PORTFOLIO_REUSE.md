@@ -19,6 +19,7 @@ imports. ALLYN currently uses only Python's standard library.
 | `the-director` | `95d8706f817d112ca8bfe2efd66e1b1eee92cd23` | Bounded symbolic reasoning and decision cycles | Later inquiry planner candidate |
 | `mosaic` | `5816b2e6ac19ed5050efb746a864c5280dc28371` | Specialist challenge and constrained model residency | Experimental, not proven neural continuity |
 | `discovery` | `a8f3e7837e5e5bc75739bf1550a99665a13f2639` | Portfolio inventory and overlap analysis | Use for periodic source reconciliation |
+| `semanticatlas` | `0de62696aa2ce31ee31e5e81c91715e271beeb95` | Structured, caller-declared evidence and interpretations | Schema reference only; do not copy identity-specific ontology |
 
 Repository URLs are `https://github.com/thebrazenbeard/<project>`.
 
@@ -34,5 +35,8 @@ Repository URLs are `https://github.com/thebrazenbeard/<project>`.
   inherited by ALLYN.
 - Cross-repository reuse requires license/provenance review and exact version
   binding. Shared ownership does not automatically resolve license terms.
+- `noema`, `the-director`, and `semanticatlas` carry source-available proprietary
+  license restrictions. ALLYN independently reimplements small interface ideas;
+  no third-party source is vendored by this prototype.
 - The initial implementation is a standalone, offline experimental prototype,
   not a trained neural model or a consciousness claim.
